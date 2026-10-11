@@ -8,11 +8,32 @@ Corrections include the source-map-js build dependency update, CLI symlink-write
 
 Socket's GitHub checks generated project reports and accepted the reviewed PRs. Dependency alert checks can skip source-only changes; “success” does not imply there are no existing package alerts. The maintainer profile's historical scores have not been independently refreshed through an authenticated full Socket package report. No score of 100 is claimed.
 
-## Remaining release work
+## Verified public releases
 
-The verified operational npm release is `container-memory-watch@0.1.1`, publicly installable with verified registry signatures and provenance (GitHub Actions run `38161734287`). `dominican-republic-map@1.3.0` is also publicly available with provenance; it adds province drill-down with 154 dated municipal geometries and explicitly reports four missing geometries. Other repositories' prepared versions are listed in [trusted publisher setup](library-release-setup.md); merged source corrections alone do not update immutable older npm versions.
+All versions below were subsequently readable in the public npm registry with provenance attestations on 2026-10-11. Initial registry 404s during processing were not treated as successful public releases. Temporary bootstrap secrets were removed from all six repositories and from the memory-watch repository after publishing. Optional token inputs remain disabled by default; ongoing automatic publication should use npm Trusted Publishing.
 
-Configure each package's npm Trusted Publisher, publish the corresponding verified version, then examine Socket's report for that exact version. If npm stages an upload, approval may require the package maintainer's 2FA. A passing CI upload must be followed by registry checks, not treated alone as public availability.
+| Package | Verified version |
+| --- | --- |
+| `container-memory-watch` | 0.1.1 |
+| `dominican-republic-map` | 1.3.0 |
+| `dominican-republic-geodata` | 0.2.1 |
+| `sillar-ui` | 1.2.1 |
+| `sillar-cli` | 0.1.1 |
+| `sillar-data-grid` | 0.1.1 |
+| `sillar-toast` | 1.0.1 |
+| `pii-safe-logger` | 1.3.1 |
+| `migration-guard-core` | 0.3.0 |
+| `drizzle-migration-guard` | 0.3.0 |
+| `knex-migration-guard` | 0.3.0 |
+| `mikro-orm-migration-guard` | 0.3.0 |
+| `node-orm-migration-guard` | 0.3.0 |
+| `prisma-migration-guard` | 0.3.0 |
+| `sequelize-migration-guard` | 0.3.0 |
+| `typeorm-migration-guard` | 0.3.0 |
+
+The map release includes 154 municipal geometries from a licensed 2020 snapshot. Baitoa, Matanzas, Oviedo and San Víctor have no matched geometry and are explicitly reported instead of displaying fabricated boundaries. This is not a complete current legal municipal boundary dataset.
+
+Existing npm versions are immutable; applications must upgrade to receive the corrections. In particular, consumers using `^0.2.0` of the migration packages must deliberately upgrade to `0.3.0`. Historical Socket rows for a deleted scoped package or legacy map name do not represent these new releases. Review Socket's exact-version alerts after its next scan before reporting score changes.
 
 ## What cannot honestly be promised
 
