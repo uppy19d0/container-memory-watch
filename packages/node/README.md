@@ -1,13 +1,36 @@
-# OOM Watch for Node.js
+# Container Memory Watch
 
 A typed JavaScript SDK that combines Node/V8 memory metrics with Linux cgroup v2 evidence collected by Rust. It produces bounded local diagnostic reports for Node APIs experiencing container memory pressure.
 
 **Status:** experimental 0.1.x. It reports evidence and investigation steps; it does not prove memory leaks, automatically identify the responsible request or guarantee prevention of OOM kills.
 
+## Why add this to your API?
+
+A container can approach its memory limit while JavaScript heap usage still looks comfortable. Watching only heap usage can therefore leave you investigating the wrong resource. This SDK puts container consumption and its visible limit beside Node RSS, V8 heap, external memory and array buffers, in one report.
+
+| What you need to know | What the library adds | How it helps you act |
+| --- | --- | --- |
+| Is my container close to its visible limit? | Configurable pressure threshold and usage ratio | Alert or reduce admitted work before headroom is exhausted |
+| Is pressure in the V8 heap too? | Heap usage relative to V8's actual heap limit | Decide whether to investigate retained JavaScript objects or broader memory consumption |
+| Did the selected cgroup record new OOM kills? | Counter deltas with first-sample and reset handling | Separate historical counts from newly observed events |
+| What happened before a restart? | Bounded timeline and explicit JSON export | Persist evidence during normal operation and correlate it with container events |
+
+**Example:** with a visible 512 MiB limit and 450 MiB in use, container utilization is about 88%. At an 80% threshold, the SDK reports pressure even if the JavaScript heap is below its own threshold. Your application can stop admitting optional background jobs, reduce batch concurrency, or alert an operator. A threshold is a policy choice, not an estimate of time until failure.
+
+Use it when your Node.js API runs in Linux cgroup v2 containers and you need application-level memory evidence without a hosted agent. If you already collect equivalent cgroup, V8 and timeline evidence with your monitoring stack, the incremental benefit may be small. Keep fleet monitoring and profilers for their respective jobs.
+
+## How it helps reduce OOM risk
+
+The library supplies signals; your application owns the response. Sample regularly, connect pressure to a bounded response such as delaying optional jobs, and persist reports before a kill. Measure the result under representative load before changing production limits. It does not release your objects, modify Kubernetes limits, throttle requests automatically or survive the death of its Node caller. Rapid allocation bursts can still outrun sampling.
+
+Node's [memoryUsage API](https://nodejs.org/api/process.html#processmemoryusage) exposes process metrics; this package adds selected-cgroup evidence, analysis and report history. Kubernetes [memory limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) remain enforced by the operating system. Rust provides bounded parsing and a persistent collector, not a claim that reading these files is always faster than JavaScript.
+
 ## Installation
 
+Release status: `container-memory-watch` is prepared for its first npm publication. Until the registry release is verified, use the repository checkout; the command below describes the intended published package.
+
 ```sh
-npm install oom-watch
+npm install container-memory-watch
 ```
 
 Requirements: Node.js 22+, Rust 1.99.0 for building the bundled collector source, and Linux cgroup v2 for live collection. The npm package includes reviewed Rust source, not prebuilt binaries. Installation runs no scripts and downloads no collector executable.
@@ -15,7 +38,7 @@ Requirements: Node.js 22+, Rust 1.99.0 for building the bundled collector source
 Build the collector explicitly:
 
 ```sh
-cargo build --release --locked --manifest-path node_modules/oom-watch/collector/Cargo.toml
+cargo build --release --locked --manifest-path node_modules/container-memory-watch/collector/Cargo.toml
 ```
 
 Copy the resulting binary from `collector/target/release/oom-watch` to a trusted location in your application image. Build for the deployment OS and architecture; a macOS binary cannot collect Linux cgroup data. Build once in a container build stage rather than compiling during application startup.
@@ -27,7 +50,7 @@ import {
   createMemoryObserver,
   createMemoryRecorder,
   writeDiagnosticReport,
-} from 'oom-watch';
+} from 'container-memory-watch';
 
 const observer = createMemoryObserver({
   binaryPath: '/opt/oom-watch/oom-watch',
@@ -48,6 +71,53 @@ try {
 Repeat sampling sequentially in your monitoring loop. The destination directory must exist. Handle sampling and storage errors independently from request handling. Keep an observer open across samples; creating it on every call loses the persistent transport benefit.
 
 `/sys/fs/cgroup` is an example, not automatic workload discovery. Choose the actual workload's cgroup directory. Visible `memory.max` may omit ancestor restrictions. Reset history when the workload identity changes.
+
+## Connect a warning to your application
+
+This finite loop demonstrates a pressure hook without overlapping collection. Replace the logging hook with your own admission policy or alert integration. Keep request handling separate from the monitoring task; a failed sampler should not become an API outage.
+
+```js
+import { setTimeout as delay } from 'node:timers/promises';
+import { analyzeMemory, createMemoryObserver, createMemoryRecorder,
+  writeDiagnosticReport } from 'container-memory-watch';
+
+const observer = createMemoryObserver({
+  binaryPath: '/opt/oom-watch/oom-watch',
+  cgroupPath: '/sys/fs/cgroup',
+});
+const recorder = createMemoryRecorder({ capacity: 120 });
+let previous = null;
+try {
+  for (let count = 0; count < 120; count++) {
+    const sample = await observer.sample();
+    const state = analyzeMemory(sample, previous, 0.8);
+    recorder.record(sample);
+    if (state.underPressure) {
+      console.warn('Container memory pressure', { ratio: state.usageRatio });
+      // Hook: pause OPTIONAL job admission using your application's policy.
+    }
+    // Persist during normal operation: SIGKILL cannot run a final export.
+    await writeDiagnosticReport('/var/reports/memory.json', recorder.report());
+    previous = sample;
+    if (count < 119) await delay(5000);
+  }
+} catch (error) {
+  console.error('Memory monitoring stopped; investigate collection/storage', error);
+} finally {
+  await observer.close();
+}
+```
+
+This example keeps at most 120 samples; at a five-second delay it covers approximately ten minutes plus collection time. Create the report directory before running it. Persist the destination outside disposable container storage if you need evidence after replacement. For continuous use, put the loop under your application's cancellation and shutdown lifecycle and define recovery and alert deduplication.
+
+## Read the result and choose a response
+
+- `CONTAINER_MEMORY_PRESSURE`: inspect concurrency, large payloads, batch sizes and container headroom. Heap pressure need not be present.
+- `V8_HEAP_PRESSURE`: investigate retained objects with a profiler in an environment with sufficient memory.
+- `CGROUP_OOM_KILLS_OBSERVED`: correlate event timestamps with the killed container or process; the counter alone does not identify the victim.
+- No finding: no configured threshold was met in the retained samples. This is not a guarantee that a spike, leak or ancestor restriction is absent.
+
+Verify improvement with the same traffic and limits: compare pressure frequency, latency, throughput and observed restarts before and after your application change. Increasing a heap limit can consume container headroom; do not treat it as a universal fix.
 
 ## API
 
