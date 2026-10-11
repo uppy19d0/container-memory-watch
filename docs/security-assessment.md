@@ -62,3 +62,8 @@ The [main CodeQL run](https://github.com/uppy19d0/oom-watch/actions/runs/3811935
 OpenSSF Scorecard 5.5.0 returned **6.7/10** after publication and the legitimate release pull request. The CI-Tests check now scores 10/10. Review history, mature maintenance history, fuzzing, stronger branch review protection and a best-practices badge remain gaps. Scorecard's Packaging and Signed-Releases checks were unavailable in this run; npm's independently verified attestation does not mean those checks scored 10/10. This assessment is not a Snyk result or a 100% security certification.
 
 Package: [npm release](https://www.npmjs.com/package/@luisaneuris60/oom-watch). For future credential-free publication, the npm owner still needs to configure the trusted publisher described in [release process](release-process.md).
+
+
+## Requested scanner clarification
+
+Socket is the user's requested package-review service. The OpenSSF scores above remain accurate repository assessments, but they are not Socket package scores. See the [Socket review](../SECURITY_REVIEW.md) for verified release controls, necessary collector capabilities and the limitation on retrieving public Socket package metrics.
