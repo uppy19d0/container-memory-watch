@@ -140,14 +140,14 @@ If you have verified Kubernetes termination data for the same lifecycle, pass `t
 
 The SDK has zero runtime npm dependencies; the Rust collector has zero third-party Rust dependencies. It imports no background timers and uploads no telemetry. Collection is read-only, does not invoke a shell, caps cgroup file input and protocol frames, and retains bounded history. It does not require Docker socket access, root or Kubernetes credentials when the chosen memory files are readable.
 
-Explicit exports use owner-only file permissions on POSIX. Atomic replacement does not guarantee power-loss durability. Reports can contain caller-supplied metadata; review destinations and retention. Only run a trusted collector executable. See [security policy](https://github.com/uppy19d0/oom-watch/blob/main/SECURITY.md).
+Explicit exports use owner-only file permissions on POSIX. Atomic replacement does not guarantee power-loss durability. Reports can contain caller-supplied metadata; review destinations and retention. Only run a trusted collector executable. See [security policy](https://github.com/uppy19d0/container-memory-watch/blob/main/SECURITY.md).
 
 ## Limitations and performance
 
 Persistent Rust collection avoids repeated process startup. Benchmarks from macOS fixture files are documented with methodology and raw results in the source repository; they are not Linux/API-load or total-resource guarantees. The persistent process is request-driven and stops on input EOF. It does not independently observe after the Node caller dies.
 
-This version does not implement cgroup v1, mount discovery, effective ancestor limits, automatic Kubernetes correlation, kernel PID attribution or leak root cause. See the [architecture](https://github.com/uppy19d0/oom-watch/blob/main/docs/architecture.md) and [performance report](https://github.com/uppy19d0/oom-watch/blob/main/docs/performance-research.md).
+This version does not implement cgroup v1, mount discovery, effective ancestor limits, automatic Kubernetes correlation, kernel PID attribution or leak root cause. See the [architecture](https://github.com/uppy19d0/container-memory-watch/blob/main/docs/architecture.md) and [performance report](https://github.com/uppy19d0/container-memory-watch/blob/main/docs/performance-research.md).
 
 ## Development and license
 
-Source: https://github.com/uppy19d0/oom-watch. See CONTRIBUTING.md for checks and CHANGELOG.md for release notes. Licensed under MIT; the complete license is included in this package. Scanner and provenance results must be checked for the exact release version; no 100% security score is claimed.
+Source: https://github.com/uppy19d0/container-memory-watch. See CONTRIBUTING.md for checks and CHANGELOG.md for release notes. Licensed under MIT; the complete license is included in this package. Scanner and provenance results must be checked for the exact release version; no 100% security score is claimed.

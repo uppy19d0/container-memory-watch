@@ -49,7 +49,7 @@ OpenSSF Scorecard increased to **6.6/10** after protected main, complete action 
 
 ## Published release evidence
 
-`@luisaneuris60/oom-watch@0.1.0` was published publicly from commit `2d2f9bb61c65d7b32bd4b03c03bfa0baede473e8` by [GitHub Actions run 38119376962](https://github.com/uppy19d0/oom-watch/actions/runs/38119376962). The run passed Rust, Node, TypeScript, npm audit, Semgrep and package inspection checks before publication. The temporary encrypted npm authentication secret was deleted after the run; reusable registry credentials are not included in the source or package.
+`@luisaneuris60/oom-watch@0.1.0` was published publicly from commit `2d2f9bb61c65d7b32bd4b03c03bfa0baede473e8` by [GitHub Actions run 38119376962](https://github.com/uppy19d0/container-memory-watch/actions/runs/38119376962). The run passed Rust, Node, TypeScript, npm audit, Semgrep and package inspection checks before publication. The temporary encrypted npm authentication secret was deleted after the run; reusable registry credentials are not included in the source or package.
 
 A fresh consumer installed the package by its npm name with lifecycle scripts disabled. `npm audit signatures` reported **one verified registry signature and one verified attestation**. The downloaded registry tarball matched the CI SHA-256 exactly:
 
@@ -57,7 +57,7 @@ A fresh consumer installed the package by its npm name with lifecycle scripts di
 9b277bc7ce3f1ab84ac01aa25ad1cb019ac4226cba24d0c28af2a54fef29df55
 ```
 
-The [main CodeQL run](https://github.com/uppy19d0/oom-watch/actions/runs/38119357681) completed successfully for Rust, JavaScript/TypeScript and GitHub Actions. The API reported zero open code-scanning alerts after the test fixture stopped embedding response data in generated code.
+The [main CodeQL run](https://github.com/uppy19d0/container-memory-watch/actions/runs/38119357681) completed successfully for Rust, JavaScript/TypeScript and GitHub Actions. The API reported zero open code-scanning alerts after the test fixture stopped embedding response data in generated code.
 
 OpenSSF Scorecard 5.5.0 returned **6.7/10** after publication and the legitimate release pull request. The CI-Tests check now scores 10/10. Review history, mature maintenance history, fuzzing, stronger branch review protection and a best-practices badge remain gaps. Scorecard's Packaging and Signed-Releases checks were unavailable in this run; npm's independently verified attestation does not mean those checks scored 10/10. This assessment is not a Snyk result or a 100% security certification.
 

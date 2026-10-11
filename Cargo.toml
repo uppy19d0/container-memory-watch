@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT"
 description = "Read-only cgroup v2 memory evidence collector"
-repository = "https://github.com/uppy19d0/oom-watch"
+repository = "https://github.com/uppy19d0/container-memory-watch"
 
 [dependencies]
