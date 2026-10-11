@@ -67,3 +67,7 @@ Package: [npm release](https://www.npmjs.com/package/@luisaneuris60/oom-watch). 
 ## Requested scanner clarification
 
 Socket is the user's requested package-review service. The OpenSSF scores above remain accurate repository assessments, but they are not Socket package scores. See the [Socket review](../SECURITY_REVIEW.md) for verified release controls, necessary collector capabilities and the limitation on retrieving public Socket package metrics.
+
+## Verified unscoped release: container-memory-watch 0.1.0
+
+[GitHub Actions run 38158829294](https://github.com/uppy19d0/container-memory-watch/actions/runs/38158829294) published commit `bd48009`. The registry temporarily exposed a staging placeholder; a later direct version/tarball check confirmed the operational 0.1.0 release. Its SHA-256 matches the inspected CI tarball: `6bacc1bb899f9c0fa00653e30ff214ae3f875dc7ad9b200b4ee0cb71742ec3f7`. The registry exposes an SLSA provenance attestation. The temporary bootstrap secret was deleted after the workflow. Subsequent cloud documentation and examples are on main and are not claimed to be part of that immutable tarball.
