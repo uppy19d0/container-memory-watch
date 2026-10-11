@@ -4,3 +4,5 @@ export { analyzeMemory } from './src/analysis.js';
 export { createDiagnosticReport, createMemoryRecorder } from './src/report.js';
 export { writeDiagnosticReport } from './src/storage.js';
 export { createMemoryObserver } from './src/observer.js';
+
+export { startMemoryWatch } from './src/watch.js';

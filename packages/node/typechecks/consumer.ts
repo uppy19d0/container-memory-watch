@@ -16,3 +16,14 @@ void inspect;
 createMemoryRecorder({ capacity: '120' });
 // @ts-expect-error Kubernetes source is an explicit contract.
 createDiagnosticReport([], { termination: { source: 'guess', reason: 'OOMKilled' } });
+
+import { startMemoryWatch } from '../index.js';
+const watch = await startMemoryWatch({ log(event) {
+  if (event.event === 'memory_status') console.log(event.container?.currentBytes, event.nodeMemory.rss);
+} });
+const automaticReport = watch.report();
+if (automaticReport?.mode === 'cgroup-v2') console.log(automaticReport.findings);
+else console.log(automaticReport?.evidence.heapUsageRatio);
+await watch.stop();
+
+if (automaticReport) await writeDiagnosticReport('/tmp/memory.json', automaticReport);
