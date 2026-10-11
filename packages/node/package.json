@@ -22,12 +22,12 @@
   "author": "OOM Watch contributors",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uppy19d0/oom-watching.git",
+    "url": "git+https://github.com/uppy19d0/oom-watch.git",
     "directory": "packages/node"
   },
-  "homepage": "https://github.com/uppy19d0/oom-watching#readme",
+  "homepage": "https://github.com/uppy19d0/oom-watch#readme",
   "bugs": {
-    "url": "https://github.com/uppy19d0/oom-watching/issues"
+    "url": "https://github.com/uppy19d0/oom-watch/issues"
   },
   "keywords": [
     "oom",

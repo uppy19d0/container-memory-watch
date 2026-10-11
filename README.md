@@ -65,4 +65,4 @@ Read the [standalone SDK documentation](packages/node/README.md) for npm install
 
 ## Contributing and license
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md). Licensed under [MIT](LICENSE). Source repository: https://github.com/uppy19d0/oom-watching.
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md). Licensed under [MIT](LICENSE). Source repository: https://github.com/uppy19d0/oom-watch.

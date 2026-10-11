@@ -35,3 +35,9 @@ Linux OOM behavior, container PID attribution, effective ancestor-limit handling
 Registry Semgrep packs can change; results refer to this run and scanner version. Zero findings does not establish that all vulnerabilities are absent. Dependency audit results are time-specific and should be rerun for releases.
 
 The credential used for npm authentication was not written into project source or package files. Credentials shared outside secret storage should be rotated; future releases should use trusted publishing rather than reusable tokens.
+
+## Public repository results
+
+The initial GitHub Linux test workflow and Semgrep source-security workflow completed successfully after upload. OpenSSF Scorecard 5.5.0 returned an initial aggregate score of **5.7/10** for the first source commit. This is the actual result, not 100%. License, security policy, token permissions, dangerous-workflow, binary-artifact, dependency-update and vulnerability checks scored 10/10. The new repository lacks review history, maintenance history, fuzzing, protected branches and signed releases. Some checks were unavailable because no pull requests or releases existed.
+
+A pinned CodeQL workflow has been added for JavaScript/TypeScript, Rust and GitHub Actions with the security-extended suite. Its completed results must be checked before claiming a clean CodeQL scan. The earlier Semgrep clean result does not establish Rust-specific analysis coverage.

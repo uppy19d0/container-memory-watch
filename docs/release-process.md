@@ -1,6 +1,6 @@
 # Release process and supply-chain evidence
 
-The public source repository is https://github.com/uppy19d0/oom-watching. Package metadata must match it. npm releases are immutable: validate the exact tarball before publishing.
+The public source repository is https://github.com/uppy19d0/oom-watch. Package metadata must match it. npm releases are immutable: validate the exact tarball before publishing.
 
 ## Required checks
 
