@@ -1,0 +1,12 @@
+.git
+**/node_modules
+**/.npmrc
+.env
+.env.*
+target
+artifacts
+**/*.tgz
+**/*.log
+**/*.pem
+**/*.key
+packages/node/collector

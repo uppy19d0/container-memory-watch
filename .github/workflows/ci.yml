@@ -26,6 +26,9 @@ jobs:
       - run: npm test --prefix packages/node
         env:
           OOM_WATCH_BINARY: ${{ github.workspace }}/target/debug/oom-watch
+      - run: node --test examples/cloud/monitor.test.mjs
+        env:
+          OOM_WATCH_BINARY: ${{ github.workspace }}/target/debug/oom-watch
       - run: npm audit --prefix packages/node --audit-level=low
       - run: npm run prepare:package --prefix packages/node
       - run: node scripts/check-release.mjs

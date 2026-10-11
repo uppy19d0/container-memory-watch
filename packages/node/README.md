@@ -151,3 +151,7 @@ This version does not implement cgroup v1, mount discovery, effective ancestor l
 ## Development and license
 
 Source: https://github.com/uppy19d0/container-memory-watch. See CONTRIBUTING.md for checks and CHANGELOG.md for release notes. Licensed under MIT; the complete license is included in this package. Scanner and provenance results must be checked for the exact release version; no 100% security score is claimed.
+
+## Deploy in the cloud
+
+Use the [cloud integration guide](https://github.com/uppy19d0/container-memory-watch/blob/main/docs/cloud-integration.md) for ECS EC2, Kubernetes, GKE and AKS examples, runtime checks, cancellation and log retention. Fargate, Cloud Run and Azure Container Apps compatibility depends on the memory files exposed by the deployed runtime.
