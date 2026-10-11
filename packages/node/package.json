@@ -1,5 +1,5 @@
 {
-  "name": "oom-watch",
+  "name": "container-memory-watch",
   "version": "0.1.0",
   "type": "module",
   "exports": {
@@ -17,7 +17,7 @@
   "devDependencies": {
     "typescript": "7.0.2"
   },
-  "description": "Bounded Node.js memory diagnostics with a persistent Rust cgroup v2 collector",
+  "description": "Container memory pressure warnings and bounded OOM evidence for Node.js APIs, powered by Rust",
   "license": "MIT",
   "author": "OOM Watch contributors",
   "repository": {

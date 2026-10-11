@@ -25,7 +25,7 @@ Use the exact repository, workflow filename, and environment below. Leave the en
 | sequelize-migration-guard | node-orm-migration-guards | publish.yml | npm | 0.3.0 |
 | typeorm-migration-guard | node-orm-migration-guards | publish.yml | npm | 0.3.0 |
 | pii-safe-logger | pii-safe-logger | publish.yml | npm | 1.3.1 |
-| oom-watch | oom-watch | publish.yml | npm-release | 0.1.0 pending first publication |
+| container-memory-watch | oom-watch | publish.yml | npm-release | 0.1.0 pending first publication |
 
 Configure all eight ORM packages individually before enabling the suite release. The suite's conservative version check requires a minor release for runtime entrypoint changes; the ReDoS correction therefore uses 0.3.0 despite preserving the public API. Consumers pinned to `^0.2.x` must explicitly upgrade.
 
@@ -35,7 +35,7 @@ The legacy name `react-dominican-republic-map` currently has no installable regi
 
 For `node-orm-migration-guards` and `pii-safe-logger`, set the GitHub Actions repository variable `NPM_TRUSTED_PUBLISHING_ENABLED` to `true` only after completing the corresponding npm settings. Then run the `publish.yml` workflow against the verified `main` commit. Enabling the variable also permits automatic publication following successful main CI.
 
-The remaining libraries use version tags: `v1.2.1` for sillar-ui and the map, `cli-v0.1.1` for sillar-cli, `v0.1.1` for the grid, `v1.0.1` for toast, and `v0.2.1` for geodata. Create tags only on the verified release commits. The earlier scoped package `@luisaneuris60/oom-watch@0.1.0` is already published. The requested unscoped name `oom-watch` is a distinct npm package and needs a first publication before its trusted publisher can be configured.
+The remaining libraries use version tags: `v1.2.1` for sillar-ui and the map, `cli-v0.1.1` for sillar-cli, `v0.1.1` for the grid, `v1.0.1` for toast, and `v0.2.1` for geodata. Create tags only on the verified release commits. The earlier scoped package `@luisaneuris60/oom-watch@0.1.0` is already published. npm rejected `oom-watch` as too similar to `npm-watch`. The new npm name `container-memory-watch` needs a first publication before its trusted publisher can be configured.
 
 After publication, verify each registry version, provenance attestation, tarball contents, and installation. Review Socket's report for that exact version. Its GitHub dependency check can report “no new dependency alerts” or skip a change without dependency modifications; neither result establishes that the published package has no existing alerts.
 

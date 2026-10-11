@@ -1,8 +1,31 @@
-# OOM Watch
+# Container Memory Watch
 
 A Rust memory-evidence collector and typed Node.js SDK for APIs experiencing container memory pressure. The SDK combines Linux cgroup v2 measurements with Node/V8 metrics, retains bounded history and exports local diagnostic reports with explicit limitations.
 
 **Status:** experimental 0.1.x. Live collection requires Linux cgroup v2. The tool does not automatically identify a memory leak, the responsible request or the killed process. Independent postmortem observation and automatic Kubernetes correlation are not implemented.
+
+## What problem does it solve?
+
+A container can approach its memory limit while JavaScript heap usage still looks comfortable. Watching only heap usage can therefore leave you investigating the wrong resource. This SDK puts container consumption and its visible limit beside Node RSS, V8 heap, external memory and array buffers, in one report.
+
+| What you need to know | What the library adds | How it helps you act |
+| --- | --- | --- |
+| Is my container close to its visible limit? | Configurable pressure threshold and usage ratio | Alert or reduce admitted work before headroom is exhausted |
+| Is pressure in the V8 heap too? | Heap usage relative to V8's actual heap limit | Decide whether to investigate retained JavaScript objects or broader memory consumption |
+| Did the selected cgroup record new OOM kills? | Counter deltas with first-sample and reset handling | Separate historical counts from newly observed events |
+| What happened before a restart? | Bounded timeline and explicit JSON export | Persist evidence during normal operation and correlate it with container events |
+
+**Example:** with a visible 512 MiB limit and 450 MiB in use, container utilization is about 88%. At an 80% threshold, the SDK reports pressure even if the JavaScript heap is below its own threshold. Your application can stop admitting optional background jobs, reduce batch concurrency, or alert an operator. A threshold is a policy choice, not an estimate of time until failure.
+
+Use it when your Node.js API runs in Linux cgroup v2 containers and you need application-level memory evidence without a hosted agent. If you already collect equivalent cgroup, V8 and timeline evidence with your monitoring stack, the incremental benefit may be small. Keep fleet monitoring and profilers for their respective jobs.
+
+## How it helps reduce OOM risk
+
+The library supplies signals; your application owns the response. Sample regularly, connect pressure to a bounded response such as delaying optional jobs, and persist reports before a kill. Measure the result under representative load before changing production limits. It does not release your objects, modify Kubernetes limits, throttle requests automatically or survive the death of its Node caller. Rapid allocation bursts can still outrun sampling.
+
+Node's [memoryUsage API](https://nodejs.org/api/process.html#processmemoryusage) exposes process metrics; this package adds selected-cgroup evidence, analysis and report history. Kubernetes [memory limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) remain enforced by the operating system. Rust provides bounded parsing and a persistent collector, not a claim that reading these files is always faster than JavaScript.
+
+The npm package name is `container-memory-watch`; the source repository and Rust binary remain `oom-watch`. First publication under the new name is pending. See the [SDK guide](packages/node/README.md) for installation and integration.
 
 ## Project layout
 
