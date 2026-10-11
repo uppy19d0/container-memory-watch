@@ -30,4 +30,3 @@ export async function collectorOptions(options) {
   }
   throw new Error('collector_unavailable');
 }
-
