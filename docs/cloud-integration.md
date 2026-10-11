@@ -2,7 +2,7 @@
 
 Run the SDK **inside the Node process you want to measure**. It samples that process's Node/V8 metrics and the explicitly selected cgroup. A sidecar importing the SDK would measure its own Node process; this version is not a fleet agent or independent postmortem daemon.
 
-The [application monitor](../examples/cloud/memory-monitor.mjs) uses sequential five-second sampling, one persistent Rust collector, a 120-sample window, structured JSON logs approximately every 30 seconds and on pressure transitions, cancellation, and bounded request timeouts. Copy it into your application and change its import to `container-memory-watch` after the 0.1.0 staged release is approved. The [sample API](../examples/cloud/server.mjs) demonstrates an optional-work admission policy while keeping health requests independent.
+The [application monitor](../examples/cloud/memory-monitor.mjs) uses sequential five-second sampling, one persistent Rust collector, a 120-sample window, structured JSON logs approximately every 30 seconds and on pressure transitions, cancellation, and bounded request timeouts. Copy it into your application and change its import to `container-memory-watch` using the verified npm 0.1.0 release. The [sample API](../examples/cloud/server.mjs) demonstrates an optional-work admission policy while keeping health requests independent.
 
 ## Prerequisites and observable limits
 

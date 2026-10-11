@@ -25,7 +25,7 @@ The library supplies signals; your application owns the response. Sample regular
 
 Node's [memoryUsage API](https://nodejs.org/api/process.html#processmemoryusage) exposes process metrics; this package adds selected-cgroup evidence, analysis and report history. Kubernetes [memory limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) remain enforced by the operating system. Rust provides bounded parsing and a persistent collector, not a claim that reading these files is always faster than JavaScript.
 
-The npm package name is `container-memory-watch`; the source repository is `container-memory-watch` and the Rust binary remains `oom-watch`. First publication under the new name is pending. See the [SDK guide](packages/node/README.md) for installation and integration.
+The npm package name is `container-memory-watch`; the source repository is `container-memory-watch` and the Rust binary remains `oom-watch`. `container-memory-watch@0.1.0` is published with verified provenance. See the [SDK guide](packages/node/README.md) for installation and integration.
 
 ## Project layout
 

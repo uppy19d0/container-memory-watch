@@ -27,7 +27,7 @@ Node's [memoryUsage API](https://nodejs.org/api/process.html#processmemoryusage)
 
 ## Installation
 
-Release status: `container-memory-watch` is prepared for its first npm publication. Until the registry release is verified, use the repository checkout; the command below describes the intended published package.
+Release status: `container-memory-watch@0.1.0` is published. Its registry tarball matches the inspected GitHub Actions artifact and includes provenance.
 
 ```sh
 npm install container-memory-watch
