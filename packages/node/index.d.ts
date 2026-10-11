@@ -40,9 +40,45 @@ export interface MemoryRecorder {
 }
 export function createDiagnosticReport(samples: MemorySample[], options?: ReportOptions): DiagnosticReport;
 export function createMemoryRecorder(options?: { capacity?: number }): MemoryRecorder;
-export function writeDiagnosticReport(path: string, report: DiagnosticReport): Promise<void>;
+export function writeDiagnosticReport(path: string, report: DiagnosticReport | NodeMemoryReport): Promise<void>;
 export interface MemoryObserver {
   sample(): Promise<MemorySample>;
   close(): Promise<void>;
 }
 export function createMemoryObserver(options: CollectorOptions): MemoryObserver;
+
+export interface NodeMemoryReport {
+  schemaVersion: 1;
+  mode: 'node-only';
+  window: { start: string; end: string; sampleCount: number };
+  evidence: { nodeMemory: MemorySample['nodeMemory']; heapLimitBytes: number; heapUsageRatio: number };
+  timeline: Array<{ timestamp: string; nodeMemory: MemorySample['nodeMemory']; heapLimitBytes: number; heapUsageRatio: number }>;
+  limitations: string[];
+}
+export type MemoryWatchReport = (DiagnosticReport & { mode: 'cgroup-v2' }) | NodeMemoryReport;
+export type MemoryWatchEvent = {
+  event: 'memory_status'; timestamp: string; mode: 'node-only' | 'cgroup-v2';
+  underPressure: boolean; heapUnderPressure: boolean; heapUsageRatio: number;
+  nodeMemory: MemorySample['nodeMemory']; heapLimitBytes: number;
+  container: null | { currentBytes: string; limitBytes: string | null; usageRatio: number | null;
+    oomKillCount: string; newOomKills: string | null; counterReset: boolean };
+} | { event: 'memory_monitor_unavailable' | 'memory_monitor_stopped'; timestamp: string;
+  mode: 'node-only' | 'cgroup-v2'; reason: string };
+export interface MemoryWatchOptions {
+  binaryPath?: string;
+  cgroupPath?: string;
+  timeoutMs?: number;
+  intervalMs?: number;
+  logEvery?: number;
+  capacity?: number;
+  threshold?: number;
+  log?: (event: MemoryWatchEvent) => void | Promise<void>;
+  signal?: AbortSignal;
+}
+export interface MemoryWatch {
+  readonly state: { mode: 'node-only' | 'cgroup-v2'; available: boolean; underPressure: boolean;
+    usageRatio: number | null; heapUsageRatio: number | null; stopped: boolean; loggerErrors: number };
+  report(): MemoryWatchReport | null;
+  stop(): Promise<void>;
+}
+export function startMemoryWatch(options?: MemoryWatchOptions): Promise<MemoryWatch>;

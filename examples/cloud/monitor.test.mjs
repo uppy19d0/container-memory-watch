@@ -29,7 +29,7 @@ test('real collector emits JSON-safe pressure evidence and cancels its pending d
     for (let attempt = 0; attempt < 40 && !monitor.state.available; attempt++) await delay(50);
     assert.equal(monitor.state.available, true);
     assert.equal(monitor.state.underPressure, true);
-    assert.equal(logs[0].report.evidence.currentBytes, '90');
+    assert.equal(logs.find(event => event.event === 'memory_status').container.currentBytes, '90');
     assert.doesNotThrow(() => JSON.stringify(logs[0]));
     await monitor.stop();
   } finally { await monitor?.stop(); await rm(directory, { recursive: true, force: true }); }

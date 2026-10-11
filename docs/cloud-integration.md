@@ -1,8 +1,10 @@
 # Integrate memory diagnostics into cloud containers
 
+Start with `const memory = await startMemoryWatch()` from `container-memory-watch`. The SDK now owns sequential sampling, bounded history, JSON status logs, Node-only fallback and cancellation. See the [one-call SDK guide](../packages/node/README.md). The example monitor is a small alias of this public API, not a separate loop to maintain.
+
 Run the SDK **inside the Node process you want to measure**. It samples that process's Node/V8 metrics and the explicitly selected cgroup. A sidecar importing the SDK would measure its own Node process; this version is not a fleet agent or independent postmortem daemon.
 
-The [application monitor](../examples/cloud/memory-monitor.mjs) uses sequential five-second sampling, one persistent Rust collector, a 120-sample window, structured JSON logs approximately every 30 seconds and on pressure transitions, cancellation, and bounded request timeouts. Copy it into your application and change its import to `container-memory-watch` using the verified npm 0.1.0 release. The [sample API](../examples/cloud/server.mjs) demonstrates an optional-work admission policy while keeping health requests independent.
+The [application monitor](../examples/cloud/memory-monitor.mjs) uses sequential five-second sampling, one persistent Rust collector, a 120-sample window, structured JSON logs approximately every 30 seconds and on pressure transitions, cancellation, and bounded request timeouts. Use `startMemoryWatch` directly from `container-memory-watch` 0.2.0 or newer. The [sample API](../examples/cloud/server.mjs) demonstrates an optional-work admission policy while keeping health requests independent.
 
 ## Prerequisites and observable limits
 
@@ -40,7 +42,7 @@ aws ecs register-task-definition --cli-input-json file://examples/cloud/ecs-task
 
 The example uses a 512 MiB container hard limit, 128 MiB reservation, non-root execution and `awslogs`. Configure networking and the ECS service separately. For **Fargate**, this EC2 task definition is not directly interchangeable: select valid task CPU/memory, platform settings, networking and logging, then validate cgroup readability and scope in the running task. No Fargate compatibility claim is made from an EC2 template.
 
-View `memory_evidence` in CloudWatch Logs. Correlate timestamps with ECS task/container stopped reasons and CloudWatch memory metrics; the SDK does not fetch ECS termination events.
+View `memory_status` in CloudWatch Logs. Correlate timestamps with ECS task/container stopped reasons and CloudWatch memory metrics; the SDK does not fetch ECS termination events.
 
 ## Kubernetes, GKE and AKS
 
@@ -58,7 +60,7 @@ For **GCP GKE**, push the same image to Artifact Registry and use it in the mani
 
 ## Cloud Run and Azure Container Apps
 
-Do not assume managed services expose the same kernel filesystem as Kubernetes. First validate cgroup v2 files and their scope in the actual deployment. If unavailable, keep the example's monitoring-unavailable signal and use provider memory metrics; this release has no Node-only collector fallback.
+Do not assume managed services expose the same kernel filesystem as Kubernetes. First validate cgroup v2 files and their scope in the actual deployment. If unavailable, keep the example's monitoring-unavailable signal and use provider memory metrics; the SDK continues with explicitly labeled Node-only metrics, which cannot confirm container pressure or OOM kills.
 
 On **Cloud Run**, a periodic background sampler requires CPU outside request processing; request-based billing can suspend background work. Instance-based billing changes cost. Minimum instances alone are not a substitute for choosing the appropriate CPU/billing behavior. Prefer structured stdout to accumulating report files: Cloud Run's writable filesystem consumes instance memory. On **Azure Container Apps**, verify the execution environment and configure platform log export; no Container Apps deployment has been validated here.
 

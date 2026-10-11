@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0
+
+- Add `startMemoryWatch()` with immediate JSON logs, sequential sampling and automatic conventional cgroup/collector lookup.
+- Provide transparent Node-only monitoring when container evidence is unavailable; unknown container metrics remain null.
+- Add bounded on-demand reports, custom log sinks, pressure-transition/OOM logging, AbortSignal and idempotent shutdown.
+- Keep existing collector/report APIs compatible and retain zero runtime dependencies and install hooks.
+- Document one-call onboarding, report interpretation and cloud log commands in npm and the portfolio.
+
 ## 0.1.1
 
 - Clarify package benefits, pressure mitigation hooks and verified release status.
