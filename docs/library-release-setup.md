@@ -25,7 +25,7 @@ Use the exact repository, workflow filename, and environment below. Leave the en
 | sequelize-migration-guard | node-orm-migration-guards | publish.yml | npm | 0.3.0 |
 | typeorm-migration-guard | node-orm-migration-guards | publish.yml | npm | 0.3.0 |
 | pii-safe-logger | pii-safe-logger | publish.yml | npm | 1.3.1 |
-| container-memory-watch | oom-watch | publish.yml | npm-release | 0.1.0 pending first publication |
+| container-memory-watch | container-memory-watch | publish.yml | npm-release | 0.1.0 pending first publication |
 
 Configure all eight ORM packages individually before enabling the suite release. The suite's conservative version check requires a minor release for runtime entrypoint changes; the ReDoS correction therefore uses 0.3.0 despite preserving the public API. Consumers pinned to `^0.2.x` must explicitly upgrade.
 

@@ -22,12 +22,12 @@
   "author": "OOM Watch contributors",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uppy19d0/oom-watch.git",
+    "url": "git+https://github.com/uppy19d0/container-memory-watch.git",
     "directory": "packages/node"
   },
-  "homepage": "https://github.com/uppy19d0/oom-watch#readme",
+  "homepage": "https://github.com/uppy19d0/container-memory-watch#readme",
   "bugs": {
-    "url": "https://github.com/uppy19d0/oom-watch/issues"
+    "url": "https://github.com/uppy19d0/container-memory-watch/issues"
   },
   "keywords": [
     "oom",

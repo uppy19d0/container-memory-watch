@@ -1,6 +1,6 @@
 # Release process and supply-chain evidence
 
-The public source repository is https://github.com/uppy19d0/oom-watch. Package metadata must match it. The requested npm name is `container-memory-watch`; npm rejected `oom-watch` as too similar to `npm-watch`. The earlier `@luisaneuris60/oom-watch@0.1.0` publication remains historical evidence, not proof of an unscoped release. npm releases are immutable: validate the exact tarball before publishing.
+The public source repository is https://github.com/uppy19d0/container-memory-watch. Package metadata must match it. The requested npm name is `container-memory-watch`; npm rejected `oom-watch` as too similar to `npm-watch`. The earlier `@luisaneuris60/oom-watch@0.1.0` publication remains historical evidence, not proof of an unscoped release. npm releases are immutable: validate the exact tarball before publishing.
 
 ## Required checks
 
@@ -10,7 +10,7 @@ The npm package intentionally ships Rust source and requires an explicit build. 
 
 ## Provenance and trusted publishing
 
-Preferred releases run `publish.yml` through GitHub Actions using npm trusted publishing (OIDC), with provenance. Configure npm's trusted publisher for owner `uppy19d0`, repository `oom-watch`, workflow `publish.yml`, and environment `npm-release`. Configure that GitHub environment's reviewer protection before production release. These remote settings are not established merely by adding a workflow file.
+Preferred releases run `publish.yml` through GitHub Actions using npm trusted publishing (OIDC), with provenance. Configure npm's trusted publisher for owner `uppy19d0`, repository `container-memory-watch`, workflow `publish.yml`, and environment `npm-release`. Configure that GitHub environment's reviewer protection before production release. These remote settings are not established merely by adding a workflow file.
 
 Current npm docs require a public matching repository and supported CI environment for provenance. The local npm token is not a substitute for verified build provenance. Normal releases use OIDC. The first release can use the explicit bootstrap input with an encrypted temporary NPM_BOOTSTRAP_TOKEN secret, exposed only to the publish step and removed after the run. Source: https://docs.npmjs.com/generating-provenance-statements/ and https://docs.npmjs.com/trusted-publishers/.
 
