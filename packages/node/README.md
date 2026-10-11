@@ -7,7 +7,7 @@ A typed JavaScript SDK that combines Node/V8 memory metrics with Linux cgroup v2
 ## Installation
 
 ```sh
-npm install @luisaneuris60/oom-watch
+npm install oom-watch
 ```
 
 Requirements: Node.js 22+, Rust 1.99.0 for building the bundled collector source, and Linux cgroup v2 for live collection. The npm package includes reviewed Rust source, not prebuilt binaries. Installation runs no scripts and downloads no collector executable.
@@ -15,7 +15,7 @@ Requirements: Node.js 22+, Rust 1.99.0 for building the bundled collector source
 Build the collector explicitly:
 
 ```sh
-cargo build --release --locked --manifest-path node_modules/@luisaneuris60/oom-watch/collector/Cargo.toml
+cargo build --release --locked --manifest-path node_modules/oom-watch/collector/Cargo.toml
 ```
 
 Copy the resulting binary from `collector/target/release/oom-watch` to a trusted location in your application image. Build for the deployment OS and architecture; a macOS binary cannot collect Linux cgroup data. Build once in a container build stage rather than compiling during application startup.
@@ -27,7 +27,7 @@ import {
   createMemoryObserver,
   createMemoryRecorder,
   writeDiagnosticReport,
-} from '@luisaneuris60/oom-watch';
+} from 'oom-watch';
 
 const observer = createMemoryObserver({
   binaryPath: '/opt/oom-watch/oom-watch',
