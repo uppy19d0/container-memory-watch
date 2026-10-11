@@ -1,0 +1,23 @@
+{
+  "family": "memory-watch-api",
+  "requiresCompatibilities": ["EC2"],
+  "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "containerDefinitions": [{
+    "name": "api",
+    "image": "ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/memory-watch-api:VERIFIED_RELEASE",
+    "essential": true,
+    "cpu": 256,
+    "memory": 512,
+    "memoryReservation": 128,
+    "user": "1000:1000",
+    "readonlyRootFilesystem": true,
+    "linuxParameters": {"initProcessEnabled": true, "capabilities": {"drop": ["ALL"]}},
+    "portMappings": [{"containerPort": 3000, "protocol": "tcp"}],
+    "environment": [{"name": "OOM_WATCH_CGROUP_PATH", "value": "/sys/fs/cgroup"}],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {"awslogs-group": "/ecs/memory-watch-api", "awslogs-region": "REGION", "awslogs-stream-prefix": "api"}
+    }
+  }]
+}

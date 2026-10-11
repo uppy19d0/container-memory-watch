@@ -89,3 +89,7 @@ Read the [standalone SDK documentation](packages/node/README.md) for npm install
 ## Contributing and license
 
 See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md). Licensed under [MIT](LICENSE). Source repository: https://github.com/uppy19d0/container-memory-watch.
+
+## Cloud integration
+
+See the [ECS, Kubernetes, GKE and AKS guide](docs/cloud-integration.md) for a multi-stage image, deployment templates, pressure-aware application hooks, structured logs and an operational validation process. Managed services such as Fargate, Cloud Run and Azure Container Apps require runtime compatibility checks.
