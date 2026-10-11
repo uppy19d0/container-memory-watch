@@ -27,3 +27,5 @@ OpenSSF Scorecard additionally assesses repository settings and development hist
 Generate npm pack metadata, a SHA-256 checksum, a production CycloneDX SBOM, and dependency/source scan evidence under ignored `artifacts/`. Review tarball contents and install the exact tarball into an isolated consumer without install scripts. Check ESM imports, TypeScript declarations and bundled collector builds. Record which operating systems were actually tested.
 
 Before upload, inspect Git's staged paths, whitespace checks and credential-pattern checks. Add files explicitly rather than including ignored output. Never overwrite remote history or claim that configured workflows have already passed.
+
+The Node release used in CI is pinned to 24.21.0 with bundled npm 11.19.0. Publication does not install a separate global npm CLI. This removes an extra tool download and avoids the un-hashed npm install flagged by the initial Scorecard run. Updates to the Node release should be reviewed together with npm compatibility.

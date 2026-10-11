@@ -16,7 +16,7 @@ jobs:
           components: rustfmt, clippy
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: '24'
+          node-version: '24.21.0'
       - run: npm ci --prefix packages/node --ignore-scripts
       - run: npm run typecheck --prefix packages/node
       - run: cargo fmt --check
