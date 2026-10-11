@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1
+
+- Clarify package benefits, pressure mitigation hooks and verified release status.
+- Document ECS EC2, Kubernetes, GKE and AKS deployments with runtime compatibility checks.
+- Add tested monitoring lifecycle examples, structured logs and deployment templates to the source repository.
+- Include README links to cloud integration; examples remain source-repository artifacts.
+
 ## 0.1.0 — Initial experimental release candidate
 
 - Read-only Rust collector for cgroup v2 consumption, visible limits and OOM counters.
