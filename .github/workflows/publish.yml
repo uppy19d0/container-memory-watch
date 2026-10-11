@@ -1,6 +1,11 @@
 name: publish-npm
 on:
   workflow_dispatch:
+    inputs:
+      bootstrap:
+        description: Use the temporary npm token for the first publication
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -19,6 +24,7 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.21.0'
+          registry-url: https://registry.npmjs.org
       - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249 # pinned action
         with:
           toolchain: 1.99.0
@@ -37,5 +43,6 @@ jobs:
       - run: semgrep scan --config p/security-audit --config p/javascript --metrics=off --disable-version-check --error .
       - run: npm run prepare:package --prefix packages/node
       - run: node scripts/check-release.mjs
-      - run: npm publish --provenance --access public --ignore-scripts
-        working-directory: packages/node
+      - run: node scripts/publish-package.mjs
+        env:
+          NODE_AUTH_TOKEN: ${{ inputs.bootstrap && secrets.NPM_BOOTSTRAP_TOKEN || '' }}

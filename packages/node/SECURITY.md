@@ -20,6 +20,6 @@ Counter changes do not identify a killed PID. Caller-supplied termination eviden
 
 ## Dependency and release policy
 
-Runtime npm and third-party Rust dependencies are absent in this version. Development dependencies are locked; CI installs them without install scripts. GitHub Actions are pinned to commits, workflow permissions are explicit, and publishing is separated from pull-request checks. Releases require tests, package inspection and scanner evidence. A clean dependency scan does not prove absence of source vulnerabilities.
+Runtime npm and third-party Rust dependencies are absent in this version. Development dependencies are locked; CI installs them without install scripts. GitHub Actions are pinned to commits, workflow permissions are explicit, and publishing is separated from pull-request checks. A temporary encrypted token may be used only for the initial manual CI publication; normal releases use OIDC. Releases require tests, package inspection and scanner evidence. A clean dependency scan does not prove absence of source vulnerabilities.
 
 If a credential is exposed, rotate it through the service that issued it. Never include credentials in Git, package artifacts, diagnostic files or scan reports.
