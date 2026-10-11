@@ -44,7 +44,7 @@ A pinned CodeQL workflow has been added for JavaScript/TypeScript, Rust and GitH
 
 ## Hardening follow-up
 
-OpenSSF Scorecard increased to **6.6/10** after protected main, complete action pinning, removal of the global npm installation and CodeQL detection. Private vulnerability reporting, secret scanning/push protection, Dependabot alerts and automated security-fix PRs are enabled. Main blocks force pushes and deletion and requires passing test and Semgrep checks, including for administrators. Independent code review, mature maintenance history, fuzzing and signed releases remain gaps; they cannot be invented to obtain 100%. The npm release name is `@luisaneuris60/oom-watch`, matching the authenticated owner.
+OpenSSF Scorecard increased to **6.6/10** after protected main, complete action pinning, removal of the global npm installation and CodeQL detection. Private vulnerability reporting, secret scanning/push protection, Dependabot alerts and automated security-fix PRs are enabled. Main blocks force pushes and deletion and requires passing test and Semgrep checks, including for administrators. Independent code review, mature maintenance history, fuzzing and signed releases remain gaps; they cannot be invented to obtain 100%. The initial npm release used `@luisaneuris60/oom-watch`. The requested release name is now `oom-watch`; this distinct registry package is pending its first publication.
 
 
 ## Published release evidence
