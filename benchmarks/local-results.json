@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "environment": {
+    "node": "v22.22.1",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2"
+  },
+  "methodology": "Three rotated rounds; five warmup samples per mode; serialized back-to-back requests; Node metrics included in every mode. Direct Node reads files concurrently. Persistent process startup excluded after warmup.",
+  "limitations": [
+    "Fixture microbenchmark, not API load or live OOM testing.",
+    "CPU and RSS measurements cover the parent Node process only, not total process-tree cost.",
+    "RSS is an end-of-round reading, not peak memory.",
+    "Event-loop delay may be unavailable in short rounds.",
+    "Results depend on hardware, cache, filesystem and scheduling."
+  ],
+  "measurements": [
+    {
+      "mode": "rustOneShot",
+      "round": 0,
+      "samples": 100,
+      "elapsedMs": 215.42795900000002,
+      "latencyMs": {
+        "p50": 2.1245420000000053,
+        "p95": 2.3124170000000106,
+        "p99": 2.382916999999992
+      },
+      "parentCpuMs": 44.809,
+      "parentRssAtEndBytes": 54788096,
+      "eventLoopDelayP99Ms": 10.616831
+    },
+    {
+      "mode": "rustPersistent",
+      "round": 0,
+      "samples": 100,
+      "elapsedMs": 8.102791000000025,
+      "latencyMs": {
+        "p50": 0.07487500000002001,
+        "p95": 0.10204200000001151,
+        "p99": 0.22383299999998485
+      },
+      "parentCpuMs": 4.254,
+      "parentRssAtEndBytes": 55132160,
+      "eventLoopDelayP99Ms": null
+    },
+    {
+      "mode": "directNode",
+      "round": 0,
+      "samples": 100,
+      "elapsedMs": 10.021749999999997,
+      "latencyMs": {
+        "p50": 0.09587500000003502,
+        "p95": 0.12237499999997681,
+        "p99": 0.21412499999996726
+      },
+      "parentCpuMs": 21.052,
+      "parentRssAtEndBytes": 56295424,
+      "eventLoopDelayP99Ms": null
+    },
+    {
+      "mode": "rustPersistent",
+      "round": 1,
+      "samples": 100,
+      "elapsedMs": 7.432457999999997,
+      "latencyMs": {
+        "p50": 0.07499999999998863,
+        "p95": 0.08474999999998545,
+        "p99": 0.09266600000000835
+      },
+      "parentCpuMs": 5.954,
+      "parentRssAtEndBytes": 56770560,
+      "eventLoopDelayP99Ms": null
+    },
+    {
+      "mode": "directNode",
+      "round": 1,
+      "samples": 100,
+      "elapsedMs": 9.781334000000015,
+      "latencyMs": {
+        "p50": 0.09445799999997462,
+        "p95": 0.11645799999996598,
+        "p99": 0.18533299999995734
+      },
+      "parentCpuMs": 19.726,
+      "parentRssAtEndBytes": 57180160,
+      "eventLoopDelayP99Ms": null
+    },
+    {
+      "mode": "rustOneShot",
+      "round": 1,
+      "samples": 100,
+      "elapsedMs": 214.08912500000002,
+      "latencyMs": {
+        "p50": 2.131208000000015,
+        "p95": 2.237874999999974,
+        "p99": 2.43262500000003
+      },
+      "parentCpuMs": 42.863,
+      "parentRssAtEndBytes": 58081280,
+      "eventLoopDelayP99Ms": 10.895359
+    },
+    {
+      "mode": "directNode",
+      "round": 2,
+      "samples": 100,
+      "elapsedMs": 10.086709000000042,
+      "latencyMs": {
+        "p50": 0.094333000000006,
+        "p95": 0.14266700000007404,
+        "p99": 0.2803750000000491
+      },
+      "parentCpuMs": 20.475,
+      "parentRssAtEndBytes": 58703872,
+      "eventLoopDelayP99Ms": null
+    },
+    {
+      "mode": "rustOneShot",
+      "round": 2,
+      "samples": 100,
+      "elapsedMs": 212.09683299999995,
+      "latencyMs": {
+        "p50": 2.1216249999999945,
+        "p95": 2.211167000000046,
+        "p99": 2.2632919999999785
+      },
+      "parentCpuMs": 36.855,
+      "parentRssAtEndBytes": 61685760,
+      "eventLoopDelayP99Ms": 10.625023
+    },
+    {
+      "mode": "rustPersistent",
+      "round": 2,
+      "samples": 100,
+      "elapsedMs": 7.0510419999999385,
+      "latencyMs": {
+        "p50": 0.06666699999993853,
+        "p95": 0.07929200000000947,
+        "p99": 0.09275000000002365
+      },
+      "parentCpuMs": 3.057,
+      "parentRssAtEndBytes": 62275584,
+      "eventLoopDelayP99Ms": null
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "window": {
+    "start": "2026-10-11T05:32:56.030Z",
+    "end": "2026-10-11T05:32:58.057Z",
+    "sampleCount": 3
+  },
+  "termination": null,
+  "evidence": {
+    "currentBytes": "94371840",
+    "limitBytes": "104857600",
+    "observedOomKills": "0",
+    "counterResets": 0,
+    "containerUsageRatio": 0.9,
+    "heapUsageRatio": 0.0011812379461457832,
+    "nodeMemory": {
+      "rss": 47136768,
+      "heapUsed": 5132832,
+      "heapTotal": 6963200,
+      "external": 1980433,
+      "arrayBuffers": 12528
+    },
+    "heapLimitBytes": 4345298944
+  },
+  "timeline": [
+    {
+      "timestamp": "2026-10-11T05:32:56.030Z",
+      "currentBytes": "94371840",
+      "limitBytes": "104857600",
+      "oomKillCount": "0",
+      "rssBytes": 46366720,
+      "heapUsedBytes": 4713480,
+      "externalBytes": 1971155,
+      "arrayBufferBytes": 10770,
+      "heapLimitBytes": 4345298944
+    },
+    {
+      "timestamp": "2026-10-11T05:32:57.043Z",
+      "currentBytes": "94371840",
+      "limitBytes": "104857600",
+      "oomKillCount": "0",
+      "rssBytes": 46858240,
+      "heapUsedBytes": 4948064,
+      "externalBytes": 1979554,
+      "arrayBufferBytes": 11649,
+      "heapLimitBytes": 4345298944
+    },
+    {
+      "timestamp": "2026-10-11T05:32:58.057Z",
+      "currentBytes": "94371840",
+      "limitBytes": "104857600",
+      "oomKillCount": "0",
+      "rssBytes": 47136768,
+      "heapUsedBytes": 5132832,
+      "externalBytes": 1980433,
+      "arrayBufferBytes": 12528,
+      "heapLimitBytes": 4345298944
+    }
+  ],
+  "findings": [
+    {
+      "code": "CONTAINER_MEMORY_PRESSURE",
+      "evidence": "Latest cgroup consumption meets the configured warning threshold.",
+      "action": "Inspect request concurrency, batch sizes and container headroom before changing limits."
+    }
+  ],
+  "limitations": [
+    "Samples cannot establish a memory leak or the responsible request.",
+    "Cgroup counters can include descendants and do not identify the Node PID.",
+    "A visible unlimited cgroup may still be restricted by an ancestor.",
+    "Sampling can miss bursts; Node and cgroup readings are not simultaneous.",
+    "Termination evidence is supplied by the caller and is not fetched or identity-verified."
+  ]
+}

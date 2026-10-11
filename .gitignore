@@ -1,0 +1,31 @@
+# Generated code, build output and dependency installations
+/target/
+**/node_modules/
+/packages/node/collector/
+/artifacts/
+/dist/
+/coverage/
+*.tgz
+*.log
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+.npmrc
+.snyk.local
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Runtime diagnostic output and local benchmark runs
+**/memory-report*.json
+**/snyk-results*.json
+**/snyk-code*.json
+/benchmarks/results*.json
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/

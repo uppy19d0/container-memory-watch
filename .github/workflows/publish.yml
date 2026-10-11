@@ -1,0 +1,42 @@
+name: publish-npm
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: npm-release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249 # pinned action
+        with:
+          toolchain: 1.99.0
+          components: rustfmt, clippy
+      - run: npm install --global npm@12.2.0 --ignore-scripts
+      - run: npm ci --prefix packages/node --ignore-scripts
+      - run: cargo fmt --check
+      - run: cargo clippy --locked --all-targets -- -D warnings
+      - run: cargo test --locked
+      - run: cargo build --release --locked
+      - run: npm test --prefix packages/node
+        env:
+          OOM_WATCH_BINARY: ${{ github.workspace }}/target/release/oom-watch
+      - run: npm run typecheck --prefix packages/node
+      - run: npm audit --prefix packages/node --audit-level=low
+      - run: pipx install semgrep==1.180.0
+      - run: semgrep scan --config p/security-audit --config p/javascript --metrics=off --disable-version-check --error .
+      - run: npm run prepare:package --prefix packages/node
+      - run: node scripts/check-release.mjs
+      - run: npm publish --provenance --access public --ignore-scripts
+        working-directory: packages/node

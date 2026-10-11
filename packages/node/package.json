@@ -1,0 +1,61 @@
+{
+  "name": "@oom-watch/node",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    "types": "./index.d.ts",
+    "default": "./index.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "tsc --noEmit --strict --target ES2022 --module NodeNext --moduleResolution NodeNext typechecks/consumer.ts",
+    "prepare:package": "node ../../scripts/prepare-package.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  },
+  "description": "Bounded Node.js memory diagnostics with a persistent Rust cgroup v2 collector",
+  "license": "MIT",
+  "author": "OOM Watch contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uppy19d0/oom-watching.git",
+    "directory": "packages/node"
+  },
+  "homepage": "https://github.com/uppy19d0/oom-watching#readme",
+  "bugs": {
+    "url": "https://github.com/uppy19d0/oom-watching/issues"
+  },
+  "keywords": [
+    "oom",
+    "oomkilled",
+    "nodejs",
+    "memory",
+    "kubernetes",
+    "docker",
+    "rust",
+    "diagnostics"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "src/",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CHANGELOG.md",
+    "collector/src/",
+    "collector/tests/",
+    "collector/Cargo.toml",
+    "collector/Cargo.lock",
+    "collector/rust-toolchain.toml"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "sideEffects": false
+}
