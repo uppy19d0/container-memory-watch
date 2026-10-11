@@ -30,7 +30,7 @@ The reviewed tarball, SHA256SUMS, production CycloneDX SBOM, pack manifest, npm 
 
 Snyk was not run: separate authentication is unavailable. The user requested an account-free alternative. Semgrep's selected rules primarily assess JavaScript/TypeScript and supported generic patterns; they do not constitute a comprehensive Rust security audit. Clippy and Rust's unsafe-code prohibition are not replacements for such an audit.
 
-Linux OOM behavior, container PID attribution, effective ancestor-limit handling, total process-tree overhead and independent postmortem survival remain unvalidated. Repository branch protection, environment reviewers, npm OIDC configuration and signed provenance must be checked remotely after setup; adding workflow files does not enable those settings.
+Linux OOM behavior, container PID attribution, effective ancestor-limit handling, total process-tree overhead and independent postmortem survival remain unvalidated. Main branch protection and npm provenance have been verified remotely (see published release evidence below). Environment reviewer protection and npm trusted publisher configuration remain pending; adding workflow files does not enable those settings.
 
 Registry Semgrep packs can change; results refer to this run and scanner version. Zero findings does not establish that all vulnerabilities are absent. Dependency audit results are time-specific and should be rerun for releases.
 
@@ -45,3 +45,20 @@ A pinned CodeQL workflow has been added for JavaScript/TypeScript, Rust and GitH
 ## Hardening follow-up
 
 OpenSSF Scorecard increased to **6.6/10** after protected main, complete action pinning, removal of the global npm installation and CodeQL detection. Private vulnerability reporting, secret scanning/push protection, Dependabot alerts and automated security-fix PRs are enabled. Main blocks force pushes and deletion and requires passing test and Semgrep checks, including for administrators. Independent code review, mature maintenance history, fuzzing and signed releases remain gaps; they cannot be invented to obtain 100%. The npm release name is `@luisaneuris60/oom-watch`, matching the authenticated owner.
+
+
+## Published release evidence
+
+`@luisaneuris60/oom-watch@0.1.0` was published publicly from commit `2d2f9bb61c65d7b32bd4b03c03bfa0baede473e8` by [GitHub Actions run 38119376962](https://github.com/uppy19d0/oom-watch/actions/runs/38119376962). The run passed Rust, Node, TypeScript, npm audit, Semgrep and package inspection checks before publication. The temporary encrypted npm authentication secret was deleted after the run; reusable registry credentials are not included in the source or package.
+
+A fresh consumer installed the package by its npm name with lifecycle scripts disabled. `npm audit signatures` reported **one verified registry signature and one verified attestation**. The downloaded registry tarball matched the CI SHA-256 exactly:
+
+```
+9b277bc7ce3f1ab84ac01aa25ad1cb019ac4226cba24d0c28af2a54fef29df55
+```
+
+The [main CodeQL run](https://github.com/uppy19d0/oom-watch/actions/runs/38119357681) completed successfully for Rust, JavaScript/TypeScript and GitHub Actions. The API reported zero open code-scanning alerts after the test fixture stopped embedding response data in generated code.
+
+OpenSSF Scorecard 5.5.0 returned **6.7/10** after publication and the legitimate release pull request. The CI-Tests check now scores 10/10. Review history, mature maintenance history, fuzzing, stronger branch review protection and a best-practices badge remain gaps. Scorecard's Packaging and Signed-Releases checks were unavailable in this run; npm's independently verified attestation does not mean those checks scored 10/10. This assessment is not a Snyk result or a 100% security certification.
+
+Package: [npm release](https://www.npmjs.com/package/@luisaneuris60/oom-watch). For future credential-free publication, the npm owner still needs to configure the trusted publisher described in [release process](release-process.md).
