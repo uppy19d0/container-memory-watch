@@ -12,6 +12,16 @@ const sdk = join(root, 'packages/node');
 const temporary = process.env.RUNNER_TEMP;
 if (!temporary) throw new Error('Missing CI temporary directory');
 const npmCli = process.env.npm_execpath ?? resolve(dirname(process.execPath), '../lib/node_modules/npm/bin/npm-cli.js');
+const { name, version } = JSON.parse(await readFile(join(sdk, 'package.json'), 'utf8'));
+const existing = spawnSync(process.execPath, [npmCli, 'view', `${name}@${version}`, 'version', '--json', '--registry', 'https://registry.npmjs.org/'], { cwd: sdk, encoding: 'utf8', timeout: 60_000 });
+if (existing.status === 0) {
+  if (JSON.parse(existing.stdout) !== version) throw new Error('Unexpected registry version');
+  console.log(`${name}@${version} is already public; publication skipped.`);
+  process.exit(0);
+}
+let registryError;
+try { registryError = JSON.parse(existing.stdout).error?.code; } catch { /* Invalid responses must fail closed. */ }
+if (registryError !== 'E404') throw new Error('Registry lookup failed; publication blocked');
 const packed = spawnSync(process.execPath, [npmCli, 'pack', '--ignore-scripts', '--json', '--pack-destination', temporary], { cwd: sdk, encoding: 'utf8' });
 if (packed.status !== 0) throw new Error('npm pack failed');
 const metadata = JSON.parse(packed.stdout)[0];

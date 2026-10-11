@@ -8,6 +8,8 @@ Run CI tests, TypeScript consumer compilation, formatting, Clippy, dependency au
 
 The npm package intentionally ships Rust source and requires an explicit build. No installation scripts, executable downloads, runtime npm dependencies or third-party Rust dependencies are required. Generated binaries, diagnostic artifacts, development dependencies, credentials and machine-specific files must not enter the source commit or npm tarball.
 
+Run the **publish-npm** workflow from Actions → Run workflow on `main`. For a new release, first merge a reviewed version and changelog update. Select `bootstrap` only when the temporary `NPM_BOOTSTRAP_TOKEN` secret has been explicitly configured; remove that secret after the run. Re-running an already public version succeeds without uploading it again. Registry lookup errors block publication, except an explicit version-not-found response. Publication runs are serialized to avoid concurrent uploads. A successful upload still needs a public-registry availability check before announcing a release.
+
 ## Provenance and trusted publishing
 
 Preferred releases run `publish.yml` through GitHub Actions using npm trusted publishing (OIDC), with provenance. Configure npm's trusted publisher for owner `uppy19d0`, repository `container-memory-watch`, workflow `publish.yml`, and environment `npm-release`. Configure that GitHub environment's reviewer protection before production release. These remote settings are not established merely by adding a workflow file.
