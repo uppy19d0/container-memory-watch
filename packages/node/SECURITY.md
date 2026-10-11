@@ -6,7 +6,7 @@ Version 0.1.x is experimental. Security fixes are applied to the latest 0.1.x re
 
 ## Reporting a vulnerability
 
-Use GitHub's private vulnerability reporting channel for this repository when available: https://github.com/uppy19d0/oom-watch/security/advisories/new. If the private channel is unavailable, contact the maintainer through their GitHub profile to request a private reporting route. Do not post exploit details, production diagnostics, credentials or tokens in a public issue.
+Use GitHub's private vulnerability reporting channel for this repository when available: https://github.com/uppy19d0/container-memory-watch/security/advisories/new. If the private channel is unavailable, contact the maintainer through their GitHub profile to request a private reporting route. Do not post exploit details, production diagnostics, credentials or tokens in a public issue.
 
 Include the affected version, minimal reproduction, expected behavior and impact. Response times depend on maintainer availability; no response SLA is promised. Coordinate disclosure after a fix and advisory are ready.
 
