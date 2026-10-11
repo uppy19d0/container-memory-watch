@@ -3,11 +3,14 @@ on:
   workflow_dispatch:
     inputs:
       bootstrap:
-        description: Use the temporary npm token for the first publication
+        description: Use an explicitly configured temporary npm token
         type: boolean
         default: false
 permissions:
   contents: read
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
 jobs:
   publish:
     if: github.ref == 'refs/heads/main'
@@ -38,6 +41,7 @@ jobs:
         env:
           OOM_WATCH_BINARY: ${{ github.workspace }}/target/release/oom-watch
       - run: npm run typecheck --prefix packages/node
+      - run: node --test scripts/publish-package.test.mjs
       - run: npm audit --prefix packages/node --audit-level=low
       - run: pipx install semgrep==1.180.0
       - run: semgrep scan --config p/security-audit --config p/javascript --metrics=off --disable-version-check --error .
