@@ -10,7 +10,7 @@ The npm package intentionally ships Rust source and requires an explicit build. 
 
 ## Provenance and trusted publishing
 
-Preferred releases run `publish.yml` through GitHub Actions using npm trusted publishing (OIDC), with provenance. Configure npm's trusted publisher for owner `uppy19d0`, repository `oom-watching`, workflow `publish.yml`, and environment `npm-release`. Configure that GitHub environment's reviewer protection before production release. These remote settings are not established merely by adding a workflow file.
+Preferred releases run `publish.yml` through GitHub Actions using npm trusted publishing (OIDC), with provenance. Configure npm's trusted publisher for owner `uppy19d0`, repository `oom-watch`, workflow `publish.yml`, and environment `npm-release`. Configure that GitHub environment's reviewer protection before production release. These remote settings are not established merely by adding a workflow file.
 
 Current npm docs require a public matching repository and supported CI environment for provenance. The local npm token is not a substitute for verified build provenance. Normal releases use OIDC. The first release can use the explicit bootstrap input with an encrypted temporary NPM_BOOTSTRAP_TOKEN secret, exposed only to the publish step and removed after the run. Source: https://docs.npmjs.com/generating-provenance-statements/ and https://docs.npmjs.com/trusted-publishers/.
 
