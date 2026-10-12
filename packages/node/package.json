@@ -1,6 +1,6 @@
 {
   "name": "container-memory-watch",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "exports": {
     "types": "./index.d.ts",
@@ -55,7 +55,8 @@
   ],
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
   },
   "sideEffects": false
 }
