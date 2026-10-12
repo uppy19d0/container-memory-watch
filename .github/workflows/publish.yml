@@ -46,6 +46,10 @@ jobs:
       - run: pipx install semgrep==1.180.0
       - run: semgrep scan --config p/security-audit --config p/javascript --metrics=off --disable-version-check --error .
       - run: npm run prepare:package --prefix packages/node
+      - name: Test package artifact guard
+        run: node --test scripts/check-package-contents.test.mjs
+      - name: Verify published package contents
+        run: node scripts/check-package-contents.mjs packages/node
       - run: node scripts/check-release.mjs
       - run: node scripts/publish-package.mjs
         env:

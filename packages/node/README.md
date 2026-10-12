@@ -197,3 +197,20 @@ Source: https://github.com/uppy19d0/container-memory-watch. See CONTRIBUTING.md 
 ## Deploy in the cloud
 
 Use the [cloud integration guide](https://github.com/uppy19d0/container-memory-watch/blob/main/docs/cloud-integration.md) for ECS EC2, Kubernetes, GKE and AKS examples, runtime checks, cancellation and log retention. Fargate, Cloud Run and Azure Container Apps compatibility depends on the memory files exposed by the deployed runtime.
+
+
+## Supply-chain verification and runtime permissions
+
+Runtime: bounded memory/cgroup observation, optional explicitly selected Rust collector subprocess, and local report storage. The collector is source-only and built explicitly; installation does not download or execute a native binary. Logs and exports can include diagnostic paths/process metadata; the application controls destinations, retention and permissions.
+
+Install the exact version required by your application and commit your lockfile. Releases request npm provenance from GitHub Actions, and CI checks the dependency graph and package contents before publication. The artifact guard rejects recognized credential patterns, private/environment files, unsafe paths, missing attribution/metadata and unexpected consumer install hooks. It is a focused release check, not proof that every secret or malicious behavior is detectable.
+
+```sh
+npm install --save-exact container-memory-watch@0.2.1
+npm audit
+npm audit signatures
+```
+
+When the installed graph has no registry dependencies, npm may report that there are no dependency signatures to verify.
+
+Inspect the exact-version [Socket report](https://socket.dev/npm/package/container-memory-watch/overview/0.2.1) and the npm provenance link. A successful CI check is not the same as a package score of 100. Socket also weighs dependency counts and real adoption; no score, download history or security guarantee is fabricated. Report suspected issues through SECURITY.md.

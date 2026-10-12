@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1
+
+- Document package runtime permissions, supply-chain verification and scanner limitations.
+- Gate CI/publication on reviewed artifact contents and add regression checks for packaging risks.
+- Keep reviewed dependency update automation and preserve existing runtime APIs.
+
+
 ## 0.2.0
 
 - Add `startMemoryWatch()` with immediate JSON logs, sequential sampling and automatic conventional cgroup/collector lookup.
